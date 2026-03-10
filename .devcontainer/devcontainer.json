@@ -1,0 +1,36 @@
+{
+  "name": "Haskell Development Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/haskell-dev",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "haskell.haskell",
+        "justusadam.language-haskell",
+        "eriksik2.vscode-ghci",
+        "mkhl.direnv",
+        "usernamehw.errorlens",
+        "editorconfig.editorconfig",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint"
+      ],
+      "settings": {
+        "haskell.manageHLS": "GHCup",
+        "haskell.ghcupExecutablePath": "/home/vscode/.ghcup/bin/ghcup",
+        "haskell.formattingProvider": "ormolu",
+        "editor.formatOnSave": true,
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+  "postCreateCommand": ".devcontainer/post-create.sh",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": false
+    }
+  }
+}
