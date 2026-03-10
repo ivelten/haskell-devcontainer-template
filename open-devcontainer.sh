@@ -1,5 +1,15 @@
 #!/bin/bash
 
+REBUILD=false
+
+# Parse options
+while getopts "r" opt; do
+  case $opt in
+    r) REBUILD=true ;;
+    *) echo "Usage: $0 [-r (rebuild)]" ; exit 1 ;;
+  esac
+done
+
 echo "🔍 Checking host dependencies..."
 
 # Check Node.js
@@ -18,10 +28,18 @@ if ! command -v devcontainer &> /dev/null; then
 fi
 echo "✅ Dev Container CLI is ready."
 
-echo "🚀 Bringing container up..."
-devcontainer up --workspace-folder .
+if [ "$REBUILD" = true ]; then
+    echo "🏗️ Rebuilding container (this might take a while)..."
+    devcontainer build --workspace-folder .
+fi
 
-echo "⚓ Entering the container..."
+echo "🚀 Turning on container..."
+if ! devcontainer up --workspace-folder . ; then
+    echo "❌ Failed to start container. Is Docker Desktop running?"
+    exit 1
+fi
+
+echo "⚓️ Entering the container..."
 # Try to enter with zsh, if it fails fall back to bash
 devcontainer exec --workspace-folder . zsh || devcontainer exec --workspace-folder . /bin/bash
 
