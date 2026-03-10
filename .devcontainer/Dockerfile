@@ -26,6 +26,10 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # Switch to the vscode user for subsequent operations
 USER vscode
 
+# Install LazyVim starter template
+RUN git clone https://github.com/LazyVim/starter ~/.config/nvim \
+    && rm -rf ~/.config/nvim/.git
+
 # Ensures shell runs in bash for following commands
 SHELL ["/bin/bash", "-c"]
 
