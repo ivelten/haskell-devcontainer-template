@@ -44,12 +44,44 @@ A devcontainer template for Haskell development.
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [VS Code](https://code.visualstudio.com/) with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
+For terminal-based usage (see below), you also need:
+
+- [Node.js](https://nodejs.org/)
+- [Dev Container CLI](https://github.com/devcontainers/cli): `npm install -g @devcontainers/cli`
+
 ## Using this template
+
+### With VS Code
 
 1. Click **Use this template** on GitHub to create a new repository from this template.
 2. Clone your new repository and open it in VS Code.
 3. When prompted, click **Reopen in Container** (or run the command `Dev Containers: Reopen in Container`).
 4. The container will start using the pre-built Docker image and run the post-creation setup automatically. This should complete in just a few minutes.
+
+### From the terminal
+
+A helper script [`open-devcontainer.sh`](open-devcontainer.sh) is provided for launching the devcontainer directly from the console using the [Dev Container CLI](https://github.com/devcontainers/cli).
+
+**Start the container and open a shell:**
+
+```bash
+./open-devcontainer.sh
+```
+
+The script will:
+
+1. Verify that Node.js and the Dev Container CLI are installed.
+2. Start the container (`devcontainer up`).
+3. Open an interactive shell inside the container (prefers `zsh`, falls back to `bash`).
+4. Prompt you to shut down the container when you exit.
+
+**Rebuild the image before starting:**
+
+```bash
+./open-devcontainer.sh -r
+```
+
+Use the `-r` flag to force a rebuild of the container image before starting. This is useful after modifying the Dockerfile or `devcontainer.json`.
 
 ## Project structure
 
