@@ -1,14 +1,26 @@
-# haskell-dev-base
+# haskell-devcontainer-template
 
-A dev container template for Haskell development.
+A devcontainer template for Haskell development.
 
 ## What's included
 
-| Component | Version |
-| ----------- | --------- |
-| GHC | 9.6.7 |
-| Cabal | 3.10.3.0 |
-| Haskell Language Server (HLS) | 2.12.0.0 |
+### Haskell Toolchain
+
+| Tool | Version |
+| --- | --- |
+| GHC | 9.10.3 |
+| Cabal | 3.12.1.0 |
+| Stack | latest |
+| GHCup | latest |
+
+### Developer Tools
+
+- **[HLS](https://github.com/haskell/haskell-language-server)** — Haskell Language Server for IDE features (completions, type hints, go-to-definition)
+- **[Hoogle](https://hoogle.haskell.org/)** — Local Haskell API search database, pre-generated at build time
+- **[Ormolu](https://github.com/tweag/ormolu)** — Opinionated, deterministic code formatter
+- **[fast-tags](https://github.com/elaforge/fast-tags)** — Fast tag file generator for Haskell source
+- **[cabal-gild](https://github.com/tfausak/cabal-gild)** — Formatter and linter for `.cabal` files
+- **[direnv](https://direnv.net/)** — Per-directory environment variable loading, hooked into both `bash` and `zsh`
 
 **Shell:** Zsh (default)
 
@@ -24,6 +36,8 @@ A dev container template for Haskell development.
 - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=editorconfig.editorconfig)
 - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=davidanson.vscode-markdownlint)
+- [Claude Code for VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)
+- [Haskell GHCi Debug Adapter Phoityne](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)
 
 ## Prerequisites
 
@@ -35,7 +49,7 @@ A dev container template for Haskell development.
 1. Click **Use this template** on GitHub to create a new repository from this template.
 2. Clone your new repository and open it in VS Code.
 3. When prompted, click **Reopen in Container** (or run the command `Dev Containers: Reopen in Container`).
-4. The container will build and run the post-creation setup automatically. This may take several minutes on first build.
+4. The container will start using the pre-built Docker image and run the post-creation setup automatically. This should complete in just a few minutes.
 
 ## Project structure
 
@@ -43,19 +57,18 @@ A dev container template for Haskell development.
 .
 ├── .devcontainer/
 │   ├── devcontainer.json   # Dev container configuration
-│   ├── docker-compose.yml  # App services
-│   ├── Dockerfile          # Haskell toolchain setup
-│   └── post-create.sh      # Post-creation setup script
+│   ├── docker-compose.yml  # App services (uses pre-built Docker image)
 ├── .editorconfig           # Consistent editor formatting rules
 └── .gitignore              # Haskell, Cabal, and VS Code ignores
 ```
 
 ## Customising the template
 
-**Changing GHC or HLS versions:** Update the version variables in `.devcontainer/Dockerfile` and update the versions mentioned in `.devcontainer/post-create.sh` welcome message accordingly.
+This template uses a pre-built Docker image from [ivelten/haskell-devcontainer](https://hub.docker.com/r/ivelten/haskell-devcontainer) on Docker Hub. The image includes GHC 9.10.3, Cabal 3.12.1.0, and all developer tools listed above.
 
-**Changing Cabal version:** Update `BOOTSTRAP_HASKELL_CABAL_VERSION` in `.devcontainer/Dockerfile`.
+**For most projects:** The pre-configured environment should work as-is. You can:
 
-**Adding Cabal packages as dependencies:** Create a `cabal.project` and `.cabal` package file at the root of the repository after cloning the template.
+- Create a `cabal.project` and `.cabal` package file at the root of the repository after cloning the template.
+- Add a `.envrc` file to the project root for per-project environment variables (direnv is pre-installed and hooked into both Bash and Zsh).
 
-**Using direnv for per-project environment variables:** Add a `.envrc` file to the project root. direnv is pre-installed and hooked into both Bash and Zsh.
+**To customize the toolchain:** If you need different versions of GHC, Cabal, or other tools, you can build your own Docker image. Fork the [haskell-devcontainer](https://github.com/ivelten/haskell-devcontainer) repository and modify the Dockerfile, then update `docker-compose.yml` to reference your custom image.

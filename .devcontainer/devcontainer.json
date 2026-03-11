@@ -2,7 +2,7 @@
   "name": "Haskell Development Environment",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/workspaces/haskell-dev",
+  "workspaceFolder": "/workspaces/haskell",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -13,7 +13,9 @@
         "usernamehw.errorlens",
         "editorconfig.editorconfig",
         "yzhang.markdown-all-in-one",
-        "davidanson.vscode-markdownlint"
+        "davidanson.vscode-markdownlint",
+        "Anthropic.claude-code",
+        "phoityne.phoityne-vscode"
       ],
       "settings": {
         "haskell.manageHLS": "GHCup",
@@ -24,8 +26,8 @@
       }
     }
   },
-  "postCreateCommand": ".devcontainer/post-create.sh",
   "remoteUser": "vscode",
+  "postStartCommand": "bash .devcontainer/direnv-setup.sh",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": true,
